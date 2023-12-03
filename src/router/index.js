@@ -6,6 +6,9 @@ import Account from '../components/Student/Account.vue'
 import Profile from '../components/Student/Profile.vue'
 import Calendar from '../components/Student/Calendar.vue'
 import StudentLayout from '../components/Layouts/StudentLayout.vue'
+import AdminLayout from '../components/Layouts/AdminLayout.vue'
+import AdminDashboard from '../components/Admin/AdminDashboard.vue'
+import ManageUsers from '../components/Admin/ManageUsers.vue'
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
@@ -42,6 +45,18 @@ const router = createRouter({
             path: '/calendar',
             name: 'Calendar',
             component: Calendar
+        },
+        {
+            path: '/admin/dashboard',
+            name: 'AdminDashboard',
+            meta: {layout: AdminLayout},
+            component: AdminDashboard
+        },
+        {
+            path: '/admin/manage-users',
+            name: 'ManageUsers',
+            meta: {layout: AdminLayout},
+            component: ManageUsers
         },
     ]
 })

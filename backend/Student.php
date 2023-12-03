@@ -1,0 +1,52 @@
+<?php
+require_once("./dbconfig.php");
+
+class Student {
+    private $db_conn;
+    private $state;
+    private $error_message;
+
+    public function __construct() {
+        try{
+            $db = new Database();
+            if($db->getState()){
+                $this->db_conn = $db->getDb();
+                $this->state = true;
+                $this->error_message = "Connected";
+            }else{
+                $this->state = false;
+                $this->error_message = $db->getErrMsg();
+            }
+        }
+        catch(Exception $e){
+            $this->state = false;
+            $this->errmsg = $e->getMessage();
+        }
+    }
+
+    public function insert_student($student) {
+        $sql = "CALL sp_insert_student(:first_name, :last_name, :email, :department, :password)";
+
+        $stmt = $this->dbcon->prepare($sql);
+        $stmt->bindParam(':first_name',$student['first_name']);
+        $stmt->bindParam(':last_name',$student['last_name']);
+        $stmt->bindParam(':email',$student['email']);
+        $stmt->bindParam(':department',$student['department']);
+        $stmt->bindParam(':password',$student['password']);
+        try {
+            $stmt->execute();
+            if($stmt) {
+                return 1;
+            } 
+            else {
+                return 0;
+            }
+        }
+        catch(Exception $ex) {
+            $this->errmsg = $ex->getMessage();
+            echo $ex->getMessage();
+            return -1;
+        }
+    }
+
+}

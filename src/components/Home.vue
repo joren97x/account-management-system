@@ -11,10 +11,9 @@
         <v-tabs v-model="tab" color="deep-purple-accent-4" align-tabs="center">
             <v-tab :value="1">General</v-tab>
             <v-tab :value="2">BSIT</v-tab>
-            <v-tab :value="3">Feedback</v-tab>
         </v-tabs>
         <v-window v-model="tab">
-            <v-window-item v-for="n in 3" :key="n" :value="n">
+            <v-window-item v-for="n in 2" :key="n" :value="n">
                 <v-container fluid>
                     <v-row>
                         <v-col v-for="i in 6" :key="i" cols="12" md="4">
