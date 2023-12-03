@@ -29,7 +29,7 @@
                 </v-btn>
             </router-link>
 
-            <v-btn @click="createAccouncementDialog = true">
+            <v-btn @click="createAccouncementDialog = true" prepend-icon="mdi-bullhorn">
                 New announcement
             </v-btn>
             
@@ -43,7 +43,7 @@
     </v-layout>
 
     <v-dialog v-model="createAccouncementDialog" width="80%">
-        <v-card>
+        <v-card title="New announcement">
             <v-card-text>
                 <v-file-input label="Announcement image"></v-file-input>
                 <v-text-field label="Title"></v-text-field>

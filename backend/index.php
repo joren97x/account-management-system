@@ -8,14 +8,12 @@
 
     require_once(__DIR__ . '/Student.php');
     
-    if(isset($_POST['method'])) {
-        $method = $_POST['method'];
-        if (function_exists($method)) {
-            call_user_func($method);
-        }
-        else {
-            exit();
-        }
+    $method = isset($_POST['method']) ? $_POST['method'] : exit();
+    if(function_exists($method)) {
+        call_user_func($method);
+    }
+    else {
+        exit();
     }
 
     function signup(){
@@ -34,10 +32,16 @@
         );
         $student = new Student();
         $ret = $student->insert_student($studArr);
-        return 0;
+        echo json_encode($ret);
     }
 
     function signin($user) {
         echo $user;
         return "WHAT THE HELLL";    
+    }
+
+    function getAllStudents() {
+        return "PLSS";
+        $student = new Student();
+        return json_encode($student->getAllStudentsFromModel());
     }

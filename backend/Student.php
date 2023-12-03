@@ -49,4 +49,27 @@ class Student {
         }
     }
 
+    public function getAllStudentsFromModel(){
+        $sql = "call getAllStudent()";
+
+        $stmt = $this->db_conn->prepare($sql);
+        try {
+            $stmt->execute();
+            if($stmt) {
+                $rows = array();
+                while($rw = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $rows[] = $rw;
+                }
+            return $rows;
+            }
+            else {  
+                return array();
+            }
+        }
+        catch(PDOException $ex) {
+            $this->state = false;
+            return $ex->getMessage();
+        }
+    }
+
 }
