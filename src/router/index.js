@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import {ref} from 'vue'
-import Home from '../components/Home.vue'
+import Announcements from '../components/Student/Announcements.vue'
 import Signin from '../components/Signin.vue'
 import Signup from '../components/Signup.vue'
 import Account from '../components/Student/Account.vue'
 import Profile from '../components/Student/Profile.vue'
-import Calendar from '../components/Student/Calendar.vue'
 import StudentLayout from '../components/Layouts/StudentLayout.vue'
 import AdminLayout from '../components/Layouts/AdminLayout.vue'
 import AdminDashboard from '../components/Admin/AdminDashboard.vue'
@@ -26,9 +25,9 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            name: 'Home',
+            name: 'Announcements',
             meta: {layout: StudentLayout, requiresAuth: true },
-            component: Home,
+            component: Announcements,
         },
         {
             path: '/sign-in',
@@ -45,20 +44,14 @@ const router = createRouter({
         {
             path: '/account',
             name: 'Account',
-            meta: { requiresAuth: true },
+            meta: { layout: StudentLayout, requiresAuth: true },
             component: Account
         },
         {
             path: '/profile',
             name: 'Profile',
-            meta: { requiresAuth: true },
+            meta: { layout: StudentLayout, requiresAuth: true },
             component: Profile,
-        },
-        {
-            path: '/calendar',
-            name: 'Calendar',
-            meta: { requiresAuth: true },
-            component: Calendar
         },
         {
             path: '/admin/dashboard',

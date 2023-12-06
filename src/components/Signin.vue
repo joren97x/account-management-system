@@ -1,23 +1,37 @@
 <script setup>
 
-    import axios from 'axios';
     import {reactive} from 'vue'
-
     const user = reactive({
         email: null,
         password: null,
-        method: 'signin'
     })
 
     function signin() {
-        axios.post(`http://localhost/account-management-system/backend/index.php`, {user})
+        signUpBtnLoading.value = true
+        let data = new FormData();
+        data.append('method', 'signin');
+        data.append('email', user.email)
+        data.append('password', user.password)
+
+        fetch(`http://localhost/account-management-system/backend/index.php`,
+        {
+            method: 'POST',
+            body: data,
+        })
         .then((response) => {
-            console.log("OK NAMAN SIYA")
-            console.log(response)
+            return response.text()
+        })
+        .then((data) => {
+            student.value = JSON.parse(data)
+            console.log(data)
+            localStorage.setItem('song', "lil kasalanan")
+            localStorage.setItem('auth', JSON.stringify(student.value))
+            signUpBtnLoading.value = false
+            router.push('/')
         })
         .catch((error) => {
-            console.log("DILI SIYA OK")
-            console.log(error)
+            signUpBtnLoading.value = false
+            router.push('/')
         })
     }
 

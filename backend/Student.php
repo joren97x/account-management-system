@@ -37,6 +37,28 @@ class Student {
         try {
             $stmt->execute();
             if($stmt) {
+                return $student;
+            } 
+            else {
+                return 0;
+            }
+        }
+        catch(Exception $ex) {
+            $this->error_message = $ex->getMessage();
+            echo $ex->getMessage();
+            return -1;
+        }
+    }
+
+    public function signin_student($student) {
+        $sql = "CALL sp_signInStudent(:email, :password)";
+
+        $stmt = $this->db_conn->prepare($sql);
+        $stmt->bindParam(':email',$student['email']);
+        $stmt->bindParam(':password',$student['password']);
+        try {
+            $stmt->execute();
+            if($stmt) {
                 return 1;
             } 
             else {

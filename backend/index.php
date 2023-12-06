@@ -63,8 +63,21 @@
     }
 
     function signin($user) {
-        echo $user;
-        return "WHAT THE HELLL";    
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $studArr = array(
+            "email" => $email,
+            "password" => $password,
+        );
+        $student = new Student();
+        $ret = $student->signin_student($studArr);
+        if($ret) {
+            echo json_encode($studArr);
+        }
+        else {
+            echo "Invalid";
+        }
     }
 
     function getAllStudents() {
