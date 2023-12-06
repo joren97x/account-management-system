@@ -2,18 +2,19 @@
 
     import axios from 'axios';
     import {reactive} from 'vue'
+    import {ref} from 'vue'
 
+    const signUpBtnLoading = ref(false)
     const user = reactive({
         first_name: null,
         last_name: null,
         department: null,
         email: null,
         password: null,
-        method: 'signup'
     })
 
     function signup() {
-
+        signUpBtnLoading.value = true
         let data = new FormData();
         data.append('method', 'signup');
         data.append('first_name', user.first_name)
@@ -25,15 +26,17 @@
         fetch(`http://localhost/account-management-system/backend/index.php`,
         {
             method: 'POST',
-            body: data
+            body: data,
         })
         .then((response) => {
             console.log("OK NAMAN SIYA")
             console.log(response)
+            signUpBtnLoading.value = false
         })
         .catch((error) => {
             console.log("DILI SIYA OK")
             console.log(error)
+            signUpBtnLoading.value = false
         })
     }
 
@@ -53,10 +56,9 @@
             <v-text-field label="Email" v-model="user.email" name="email"></v-text-field>
             <v-select :items="['BSIT', 'BEED', 'BSED', 'BSHM']" v-model="user.department" name="department" label="Department"></v-select>
             <v-text-field label="Password" v-model="user.password" name="password"></v-text-field>
-                
         </v-card-item>
         <v-card-actions>
-            <v-btn @click="signup">Sign up</v-btn>
+            <v-btn @click="signup" :loading="signUpBtnLoading">Sign up</v-btn>
         </v-card-actions>
     </v-card>
 

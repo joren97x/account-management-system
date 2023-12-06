@@ -20,19 +20,20 @@ class Student {
         }
         catch(Exception $e){
             $this->state = false;
-            $this->errmsg = $e->getMessage();
+            $this->error_message = $e->getMessage();
         }
     }
 
     public function insert_student($student) {
-        $sql = "CALL sp_insert_student(:first_name, :last_name, :email, :department, :password)";
+        $sql = "CALL sp_insert_student(:first_name, :last_name, :email, :department, :password, :role)";
 
-        $stmt = $this->dbcon->prepare($sql);
+        $stmt = $this->db_conn->prepare($sql);
         $stmt->bindParam(':first_name',$student['first_name']);
         $stmt->bindParam(':last_name',$student['last_name']);
         $stmt->bindParam(':email',$student['email']);
         $stmt->bindParam(':department',$student['department']);
         $stmt->bindParam(':password',$student['password']);
+        $stmt->bindParam(':role',$student['role']);
         try {
             $stmt->execute();
             if($stmt) {
@@ -43,14 +44,14 @@ class Student {
             }
         }
         catch(Exception $ex) {
-            $this->errmsg = $ex->getMessage();
+            $this->error_message = $ex->getMessage();
             echo $ex->getMessage();
             return -1;
         }
     }
 
     public function getAllStudentsFromModel(){
-        $sql = "call getAllStudent()";
+        $sql = "call sp_getAllStudents()";
 
         $stmt = $this->db_conn->prepare($sql);
         try {
