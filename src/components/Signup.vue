@@ -3,7 +3,10 @@
     import axios from 'axios';
     import {reactive} from 'vue'
     import {ref} from 'vue'
+    import {useRouter} from 'vue-router'
 
+    const router = useRouter()
+    const student = ref(null)
     const signUpBtnLoading = ref(false)
     const user = reactive({
         first_name: null,
@@ -29,14 +32,19 @@
             body: data,
         })
         .then((response) => {
-            console.log("OK NAMAN SIYA")
-            console.log(response)
+            return response.text()
+        })
+        .then((data) => {
+            student.value = JSON.parse(data)
+            console.log(data)
+            localStorage.setItem('song', "lil kasalanan")
+            localStorage.setItem('auth', JSON.stringify(student.value))
             signUpBtnLoading.value = false
+            router.push('/')
         })
         .catch((error) => {
-            console.log("DILI SIYA OK")
-            console.log(error)
             signUpBtnLoading.value = false
+            router.push('/')
         })
     }
 

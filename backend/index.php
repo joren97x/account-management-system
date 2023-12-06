@@ -59,7 +59,7 @@
         );
         $student = new Student();
         $ret = $student->insert_student($studArr);
-        echo json_encode($ret);
+        echo json_encode($studArr);
     }
 
     function signin($user) {
