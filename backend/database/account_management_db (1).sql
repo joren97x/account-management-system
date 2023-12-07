@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2023 at 02:20 PM
+-- Generation Time: Dec 07, 2023 at 02:29 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -122,19 +122,15 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `department`, `password`, `role`) VALUES
-(1, 'chae', 'young', 'chae@chae.asdasd', 'BSIT', 'chaeyoung143', 'Admin'),
+(1, 'Ryan', 'Gosling', 'literally me', 'BSIT', 'chaeyoung143', 'Admin'),
 (2, 'Ice', 'Spice', 'ice@spice.e', 'BSIT', 'asdasd', 'Admin'),
-(4, 'Abi', 'Abi', 'hev@abi.com', 'BSIT', 'Admin', 'Admin'),
-(5, 'Girls', 'Girls', 'city@girls.com', 'BSIT', 'student', 'pussytalk'),
-(6, 'Sumagang', 'Sumagang', 'sumagangjoren@gmail.com', 'BSED', 'Student', 'asdasd'),
-(7, 'Sumagang', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'Student'),
-(8, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
+(4, 'Hev', 'Abi', 'hev@abi.com', 'BSHM', 'Admin', 'Admin'),
+(5, 'City', 'Girls', 'city@girls.com', 'BSHM', 'student', 'Student'),
+(6, 'Skibidi', 'Gyatt', 'skibidi gyatt rizz', 'BEED', '123456', 'Admin'),
+(7, 'Chae ', 'young', 'young@chae.boang', 'BSIT', 'asdasd', 'Student'),
 (12, 'asdas', 'asdasd', 'sumagangjoren@gmail.com', 'BEED', 'asdas', 'student'),
-(13, 'Joren', 'Sumagang', 'no cap nigga', 'BSHM', 'asdasd', 'student'),
 (14, 'Joren', 'Sumagang', 'asdasda@asd', 'BEED', 'asdasd', 'student'),
-(15, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
-(16, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BEED', 'asdasd', 'student'),
-(17, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
+(17, 'new', 'jeans', 'oma oma godd kasu kasu wa', 'BEED', 'gyatt', 'Admin'),
 (18, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
 (19, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
 (20, 'Sumagang', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'Admin');

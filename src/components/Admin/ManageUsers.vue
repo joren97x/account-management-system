@@ -6,8 +6,10 @@
     const users = ref(null)
     const deleteUserDialog = ref(false)
     const editUserDialog = ref(false)
-    const signUpBtnLoading = ref(false)
+    const loading = ref(false)
     const showPassword = ref(false)
+    const snackbarText =ref('')
+    const snackbar = ref(false)
 
     const updateUserForm = reactive({
         id: null,
@@ -61,7 +63,7 @@
     })
 
     function updateUser() {
-        signUpBtnLoading.value = true
+        loading.value = true
         let data = new FormData();
         data.append('method', 'updateUser');
         data.append('id', updateUserForm.id)
@@ -83,17 +85,19 @@
         .then(data =>{
             users.value = JSON.parse(data);
             editUserDialog.value = false
-            signUpBtnLoading.value = false
+            loading.value = false
+            snackbarText.value = "User updated successfully"
+            snackbar.value = true
         })
         .catch((error) => {
             console.log(error)
             editUserDialog.value = false
-            signUpBtnLoading.value = false
+            loading.value = false
         })
     }
 
     function deleteUser() {
-        signUpBtnLoading.value = true
+        loading.value = true
         let data = new FormData();
         data.append('method', 'deleteUser');
         data.append('id', deleteUserForm.id)
@@ -109,12 +113,14 @@
         .then(data =>{
             users.value = JSON.parse(data);
             deleteUserDialog.value = false
-            signUpBtnLoading.value = false
+            loading.value = false
+            snackbarText.value = "User deleted successfully"
+            snackbar.value = true
         })
         .catch((error) => {
             console.log(error)
             deleteUserDialog.value = false
-            signUpBtnLoading.value = false
+            loading.value = false
         })
     }
 
@@ -182,7 +188,7 @@
             <v-card-actions>
                 <v-spacer/>
                 <v-btn color="grey" @click="editUserDialog = false">Cancel</v-btn>
-                <v-btn color="blue" @click="updateUser()" :loading="signUpBtnLoading">Update</v-btn>
+                <v-btn color="blue" @click="updateUser()" :loading="loading">Update</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -199,5 +205,9 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
+
+    <v-snackbar v-model="snackbar" color="green" timeout="2000" location="bottom left">
+      {{ snackbarText }}
+    </v-snackbar>
 
 </template>
