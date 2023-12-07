@@ -50,6 +50,54 @@ class Student {
         }
     }
 
+    public function update_student($student) {
+        $sql = "CALL sp_update_student(:id, :first_name, :last_name, :email, :department, :role, :password)";
+
+        $stmt = $this->db_conn->prepare($sql);
+        $stmt->bindParam(':id',$student['id']);
+        $stmt->bindParam(':first_name',$student['first_name']);
+        $stmt->bindParam(':last_name',$student['last_name']);
+        $stmt->bindParam(':email',$student['email']);
+        $stmt->bindParam(':department',$student['department']);
+        $stmt->bindParam(':role',$student['role']);
+        $stmt->bindParam(':password',$student['password']);
+        try {
+            $stmt->execute();
+            if($stmt) {
+                return $student;
+            } 
+            else {
+                return 0;
+            }
+        }
+        catch(Exception $ex) {
+            $this->error_message = $ex->getMessage();
+            echo $ex->getMessage();
+            return -1;
+        }
+    }
+
+    public function delete_student($student) {
+        $sql = "CALL sp_delete_student(:id)";
+
+        $stmt = $this->db_conn->prepare($sql);
+        $stmt->bindParam(':id',$student['id']);
+        try {
+            $stmt->execute();
+            if($stmt) {
+                return $student;
+            } 
+            else {
+                return 0;
+            }
+        }
+        catch(Exception $ex) {
+            $this->error_message = $ex->getMessage();
+            echo $ex->getMessage();
+            return -1;
+        }
+    }
+
     public function signin_student($student) {
         $sql = "CALL sp_signInStudent(:email, :password)";
 

@@ -51,6 +51,7 @@
 </script>
 
 <template>
+    
     <v-card title="Sign up" width="69%">
         <v-card-item>
             <v-row>

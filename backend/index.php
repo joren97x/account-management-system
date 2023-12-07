@@ -7,6 +7,7 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     require_once(__DIR__ . '/Student.php');
+    require_once(__DIR__ . '/Announcement.php');
     // echo "hey";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,27 +21,9 @@
             exit();
         }
     }
-    // $method = "getAllStudents";
-    // if(function_exists($method)) {
-    //     call_user_func($method);
-    // }
-    // else {
-    //     exit();
-    // }
-
-    // $data = json_decode(file_get_contents("php://input"));
-    // $method = isset($data->method) ? $data->method : exit();
-    // $method = "getAllStudents";
-    // echo $method;
-    
+  
 
     function signup(){
-        // $data = json_decode(file_get_contents("php://input"));
-        // $fname = "Hev";
-        // $lname = "Abi";
-        // $em = "hev@abi.com";
-        // $de = "BSIT";
-        // $pa = "asdasd";
 
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
@@ -85,4 +68,92 @@
         echo json_encode($student->getAllStudentsFromModel());
         // echo "bruh";
         // print_r($student->getAllStudentsFromModel());
+    }
+
+    function updateUser() {
+        $id = $_POST['id'];
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $email = $_POST['email'];
+        $department = $_POST['department'];
+        $role = $_POST['role'];
+        $password = $_POST['password'];
+
+        $studArr = array(
+            "id" => $id,
+            "first_name" => $first_name,
+            "last_name" => $last_name,
+            "email" => $email,
+            "department" => $department,
+            "role" => $role,
+            "password" => $password
+        );
+
+        $student = new Student();
+        $ret = $student->update_student($studArr);
+        echo json_encode($student->getAllStudentsFromModel());
+    }
+
+    function deleteUser() {
+        $id = $_POST['id'];
+
+        $studArr = array(
+            "id" => $id
+        );
+
+        $student = new Student();
+        $ret = $student->delete_student($studArr);
+        echo json_encode($student->getAllStudentsFromModel());
+    }
+
+    function storeAnnouncement() {
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $date = new DateTime('now');
+        $formatted_date = date_format($date,"Y-m-d H-i-s");
+
+        $announcementArr = array(
+            "title" => $title,
+            "description" => $description,
+            "created_at" => $formatted_date,
+        );
+        $announcement = new Announcement();
+        $ret = $announcement->store_announcement($announcementArr);
+        echo json_encode($announcementArr);
+    }
+
+    function getAllAnnouncements() {
+        $announcement = new Announcement();
+        echo json_encode($announcement->getAllAnnouncementsFromModel());
+        // echo "bruh";
+        // print_r($student->getAllStudentsFromModel());
+    }
+
+    function updateAnnouncement() {
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        
+        $announcementArr = array(
+            "id" => $id,
+            "title" => $title,
+            "description" => $description,
+        );
+
+        $announcement = new Announcement();
+        $ret = $announcement->update_announcement($announcementArr);
+        echo json_encode($announcement->getAllAnnouncementsFromModel());
+    }
+
+    function deleteAnnouncement() {
+        $id = $_POST['id'];
+
+        $announcementArr = array(
+            "id" => $id
+        );
+
+        $announcement = new Announcement();
+        $ret = $announcement->delete_announcement($announcementArr);
+        echo json_encode($announcement->getAllAnnouncementsFromModel());
+
     }

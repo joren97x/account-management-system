@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2023 at 02:00 PM
+-- Generation Time: Dec 07, 2023 at 02:20 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -25,12 +25,24 @@ DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_delete_announcement` (IN `_id` INT)   BEGIN
+  DELETE FROM announcements WHERE id = _id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_delete_student` (IN `_id` INT)   BEGIN
+  DELETE FROM users WHERE id = _id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getAllStudents` ()   BEGIN
   SELECT * FROM users;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getStudentByEmail` (IN `_email` VARCHAR(250))   BEGIN
   SELECT * FROM student WHERE email = _email;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_all_announcements` ()   BEGIN
+  SELECT * FROM announcements;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_student` (IN `_first_name` VARCHAR(255), IN `_last_name` VARCHAR(255), IN `_email` VARCHAR(255), IN `_department` VARCHAR(255), IN `_password` VARCHAR(255), IN `_role` VARCHAR(255))  SQL SECURITY INVOKER BEGIN
@@ -40,6 +52,28 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_student` (IN `_first_name
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_signInStudent` (IN `_email` VARCHAR(255), IN `_password` VARCHAR(255))   BEGIN
   SELECT * FROM student WHERE email = _email && password = _password;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_store_announcement` (IN `_title` VARCHAR(255), IN `_description` VARCHAR(255), IN `_created_at` DATE)   BEGIN
+  INSERT INTO announcements(title, description, created_at) VALUES (_title, _description, _created_at);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_update_announcement` (IN `_id` INT, IN `_title` VARCHAR(255), IN `_description` VARCHAR(255))   BEGIN
+  UPDATE announcements SET
+    title = _title,
+    description = _description
+    WHERE id = _id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_update_student` (IN `_id` INT, IN `_first_name` VARCHAR(255), IN `_last_name` VARCHAR(255), IN `_email` VARCHAR(255), IN `_department` VARCHAR(255), IN `_role` VARCHAR(255), IN `_password` VARCHAR(255))   BEGIN
+  UPDATE users set 
+    first_name = _first_name,
+    last_name = _last_name, 
+    email = _email,
+    department = _department,
+    password = _password,
+    role = _role
+    WHERE id = _id;
 END$$
 
 DELIMITER ;
@@ -56,6 +90,16 @@ CREATE TABLE `announcements` (
   `description` text NOT NULL,
   `created_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `announcements`
+--
+
+INSERT INTO `announcements` (`id`, `title`, `description`, `created_at`) VALUES
+(5, 'Alas 9: 15 PM na', 'wa pa koy kaon', '2023-12-07'),
+(6, 'BOANG NGA ANNOUNCEMENT', 'TINUWA NASAD AMONG SUDAN PISTE YAWA GAITAY BAHOG LOBOGT', '2023-12-07'),
+(7, 'lorem ipsum or some shit', 'lorem ispum kokwd akwokd owaan,mdn awkoawkoa akwokaw ssadhsjhghsgs', '2023-12-07'),
+(8, 'ANNOUNCEMENT: KATUGON NAKO', 'HAHAHAHAHAAHA', '2023-12-07');
 
 -- --------------------------------------------------------
 
@@ -78,26 +122,22 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `department`, `password`, `role`) VALUES
-(1, 'joren', 'sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
-(2, 'john', 'DOe', 'john@doe.com', 'BSIT', 'asdasd', 'student'),
-(3, 'Hev', 'Abi', 'hev@abi.com', 'BSIT', 'asdasd', 'student'),
-(4, 'Hev', 'Abi', 'hev@abi.com', 'BSIT', 'asdasd', 'student'),
-(5, 'DUmbass', 'Nigga', 'dumb@assnigga.com', 'BSIT', 'asdasd', 'student'),
-(6, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSED', 'asdasd', 'student'),
-(7, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
+(1, 'chae', 'young', 'chae@chae.asdasd', 'BSIT', 'chaeyoung143', 'Admin'),
+(2, 'Ice', 'Spice', 'ice@spice.e', 'BSIT', 'asdasd', 'Admin'),
+(4, 'Abi', 'Abi', 'hev@abi.com', 'BSIT', 'Admin', 'Admin'),
+(5, 'Girls', 'Girls', 'city@girls.com', 'BSIT', 'student', 'pussytalk'),
+(6, 'Sumagang', 'Sumagang', 'sumagangjoren@gmail.com', 'BSED', 'Student', 'asdasd'),
+(7, 'Sumagang', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'Student'),
 (8, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
-(9, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
-(10, 'Joren', 'Sumagang', 'joren@email.com', 'null', 'dsfsafd', 'student'),
-(11, 'asdas', 'asdsa', 'joren@email.com', 'BSED', 'asdasd', 'student'),
 (12, 'asdas', 'asdasd', 'sumagangjoren@gmail.com', 'BEED', 'asdas', 'student'),
-(13, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSHM', 'asdasd', 'student'),
+(13, 'Joren', 'Sumagang', 'no cap nigga', 'BSHM', 'asdasd', 'student'),
 (14, 'Joren', 'Sumagang', 'asdasda@asd', 'BEED', 'asdasd', 'student'),
 (15, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
 (16, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BEED', 'asdasd', 'student'),
 (17, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
 (18, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
 (19, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
-(20, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student');
+(20, 'Sumagang', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'Admin');
 
 --
 -- Indexes for dumped tables
@@ -123,7 +163,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`

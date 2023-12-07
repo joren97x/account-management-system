@@ -10,6 +10,7 @@
     const showPassword = ref(false)
 
     const updateUserForm = reactive({
+        id: null,
         first_name: null,
         last_name: null,
         department: null,
@@ -25,6 +26,7 @@
     })
 
     function showEditUserDialog(selectedUser) {
+        updateUserForm.id = selectedUser.id
         updateUserForm.first_name = selectedUser.first_name
         updateUserForm.last_name = selectedUser.last_name
         updateUserForm.department = selectedUser.department
@@ -51,14 +53,70 @@
             }
         )
         .then(res =>{
-            console.log(res)
             return res.text();
         })
         .then(data =>{
-            console.log(data);
             users.value = JSON.parse(data);
         })
     })
+
+    function updateUser() {
+        signUpBtnLoading.value = true
+        let data = new FormData();
+        data.append('method', 'updateUser');
+        data.append('id', updateUserForm.id)
+        data.append('first_name', updateUserForm.first_name)
+        data.append('last_name', updateUserForm.last_name)
+        data.append('email', updateUserForm.email)
+        data.append('department', updateUserForm.department)
+        data.append('role', updateUserForm.role)
+        data.append('password', updateUserForm.password)
+
+        fetch(`http://localhost/account-management-system/backend/index.php`,
+        {
+            method: 'POST',
+            body: data,
+        })
+        .then(res =>{
+            return res.text();
+        })
+        .then(data =>{
+            users.value = JSON.parse(data);
+            editUserDialog.value = false
+            signUpBtnLoading.value = false
+        })
+        .catch((error) => {
+            console.log(error)
+            editUserDialog.value = false
+            signUpBtnLoading.value = false
+        })
+    }
+
+    function deleteUser() {
+        signUpBtnLoading.value = true
+        let data = new FormData();
+        data.append('method', 'deleteUser');
+        data.append('id', deleteUserForm.id)
+
+        fetch(`http://localhost/account-management-system/backend/index.php`,
+        {
+            method: 'POST',
+            body: data,
+        })
+        .then(res =>{
+            return res.text();
+        })
+        .then(data =>{
+            users.value = JSON.parse(data);
+            deleteUserDialog.value = false
+            signUpBtnLoading.value = false
+        })
+        .catch((error) => {
+            console.log(error)
+            deleteUserDialog.value = false
+            signUpBtnLoading.value = false
+        })
+    }
 
 </script>
 <template>
@@ -124,7 +182,7 @@
             <v-card-actions>
                 <v-spacer/>
                 <v-btn color="grey" @click="editUserDialog = false">Cancel</v-btn>
-                <v-btn color="blue" @click="signup" :loading="signUpBtnLoading">Update</v-btn>
+                <v-btn color="blue" @click="updateUser()" :loading="signUpBtnLoading">Update</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -137,7 +195,7 @@
             <v-card-actions>
                 <v-spacer/>
                 <v-btn color="grey" @click="deleteUserDialog = false">Cancel</v-btn>
-                <v-btn color="red" @click="deleteUserDialog = false">Delete</v-btn>
+                <v-btn color="red" @click="deleteUser()">Delete</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
