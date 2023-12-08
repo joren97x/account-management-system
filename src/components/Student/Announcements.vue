@@ -1,7 +1,27 @@
 <script setup>
 
-    import {ref} from 'vue'
+    import {ref, onMounted} from 'vue'
+    import {format} from 'date-fns'
     const tab = ref(null)
+    const announcements = ref(null)
+    onMounted(() => {
+        let data = new FormData();
+        data.append('method','getAllAnnouncements')
+        fetch('http://localhost/account-management-system/backend/index.php',
+            {
+                method:'POST',
+                body:data
+            }
+        )
+        .then(res =>{
+            return res.text();
+        })
+        .then(data =>{
+            announcements.value = JSON.parse(data);
+        })
+    })
+
+
   
 </script>
 
@@ -15,7 +35,7 @@
             <v-window-item>
                 <v-container fluid>
                     <v-row>
-                        <v-col v-for="i in 6" :key="i" cols="12" md="4">
+                        <v-col v-for="(announcement, i) in announcements" :key="announcement.id" cols="12" md="4">
                             <v-card>
                                 <v-img
                                 :src="`https://picsum.photos/500/300?image=${i * (i + 2) * 5 + 10}`"
@@ -23,14 +43,14 @@
                                 cover
                                 ></v-img>
                                 <v-card-title>
-                                    Announcement title
+                                    {{ announcement.title }}
                                 </v-card-title>
                                 <v-card-subtitle>
                                     <v-icon>mdi-circle-medium</v-icon>
-                                    December {{ i }}, 2023
+                                    {{ format(new Date(announcement.created_at), 'PPPP') }}
                                 </v-card-subtitle>
                                 <v-card-text>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing.
+                                    {{ announcement.description }}
                                 </v-card-text>
                             </v-card>
                         </v-col>

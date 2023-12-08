@@ -46,6 +46,10 @@
     }
 
     onMounted(() => {
+        getAllUsers()
+    })
+
+    function getAllUsers() {
         let data = new FormData();
         data.append('method','getAllStudents')
         fetch('http://localhost/account-management-system/backend/index.php',
@@ -60,7 +64,7 @@
         .then(data =>{
             users.value = JSON.parse(data);
         })
-    })
+    }
 
     function updateUser() {
         loading.value = true
@@ -79,18 +83,14 @@
             method: 'POST',
             body: data,
         })
-        .then(res =>{
-            return res.text();
-        })
-        .then(data =>{
-            users.value = JSON.parse(data);
+        .then(() => {
+            getAllUsers()
             editUserDialog.value = false
             loading.value = false
             snackbarText.value = "User updated successfully"
             snackbar.value = true
         })
         .catch((error) => {
-            console.log(error)
             editUserDialog.value = false
             loading.value = false
         })
@@ -107,18 +107,14 @@
             method: 'POST',
             body: data,
         })
-        .then(res =>{
-            return res.text();
-        })
-        .then(data =>{
-            users.value = JSON.parse(data);
+        .then(() => {
+            getAllUsers()
             deleteUserDialog.value = false
             loading.value = false
             snackbarText.value = "User deleted successfully"
             snackbar.value = true
         })
         .catch((error) => {
-            console.log(error)
             deleteUserDialog.value = false
             loading.value = false
         })

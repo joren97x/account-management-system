@@ -1,13 +1,20 @@
 <script setup>
 
     import {ref, reactive} from 'vue'
+    import { useRouter } from 'vue-router';
     const createAccouncementDialog = ref(false)
     const loading = ref(false)
+    const router = useRouter()
     const announcementForm = reactive({
         title: null,
         description: null,
         created_at: new Date()
     })
+
+    function logout() {
+        localStorage.removeItem('auth')
+        router.push('/sign-up')
+    }
 
     function storeAnnouncement() {
         loading.value = true
@@ -70,14 +77,14 @@
             </router-link>
 
             <router-link to="#">
-                <v-btn color="red" prepend-icon="mdi-logout">
+                <v-btn color="red" prepend-icon="mdi-logout" @click="logout()">
                     Logout
                 </v-btn>
             </router-link>
             
         </v-app-bar>
 
-        <v-main>
+        <v-main class="bg-grey-lighten-3">
             <v-container>
                 <slot/>
             </v-container>

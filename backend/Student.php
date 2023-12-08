@@ -37,6 +37,7 @@ class Student {
         try {
             $stmt->execute();
             if($stmt) {
+
                 return $student;
             } 
             else {
@@ -107,10 +108,14 @@ class Student {
         try {
             $stmt->execute();
             if($stmt) {
-                return 1;
-            } 
-            else {
-                return 0;
+                $rows = array();
+                while($rw = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $rows[] = $rw;
+                }
+            return $rows;
+            }
+            else {  
+                return array();
             }
         }
         catch(Exception $ex) {
@@ -132,6 +137,54 @@ class Student {
                     $rows[] = $rw;
                 }
             return $rows;
+            }
+            else {  
+                return array();
+            }
+        }
+        catch(PDOException $ex) {
+            $this->state = false;
+            return $ex->getMessage();
+        }
+    }
+
+    public function getStudentFromModel($student){
+        $sql = "call sp_get_student(:id)";
+
+        $stmt = $this->db_conn->prepare($sql);
+        $stmt->bindParam(':id',$student['id']);
+        try {
+            $stmt->execute();
+            if($stmt) {
+                $rows = array();
+                while($rw = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $rows[] = $rw;
+                }
+                return $rows;
+            }
+            else {  
+                return array();
+            }
+        }
+        catch(PDOException $ex) {
+            $this->state = false;
+            return $ex->getMessage();
+        }
+    }
+
+    public function getStudentByEmailFromModel($student){
+        $sql = "call sp_get_student_by_email(:email)";
+
+        $stmt = $this->db_conn->prepare($sql);
+        $stmt->bindParam(':email',$student['email']);
+        try {
+            $stmt->execute();
+            if($stmt) {
+                $rows = array();
+                while($rw = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $rows[] = $rw;
+                }
+                return $rows;
             }
             else {  
                 return array();

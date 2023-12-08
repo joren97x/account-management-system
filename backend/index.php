@@ -8,10 +8,8 @@
 
     require_once(__DIR__ . '/Student.php');
     require_once(__DIR__ . '/Announcement.php');
-    // echo "hey";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Retrieve data sent from the frontend
         $method = isset($_POST['method']) ? $_POST['method'] : '';
         // $method = "getAllStudents";
         if(function_exists($method)) {
@@ -21,7 +19,6 @@
             exit();
         }
     }
-  
 
     function signup(){
 
@@ -30,7 +27,7 @@
         $email = $_POST['email'];
         $department = $_POST['department'];
         $password = $_POST['password'];
-        $role = "student";
+        $role = "Student";
 
         $studArr = array(
             "first_name" => $first_name,
@@ -42,10 +39,16 @@
         );
         $student = new Student();
         $ret = $student->insert_student($studArr);
-        echo json_encode($studArr);
+        echo json_encode($student->getStudentByEmailFromModel($studArr));
     }
 
-    function signin($user) {
+    function signin() {
+        // $email = 
+        // $password = $_POST['password'];
+
+        // $email = "young@chae.boang";
+        // $password = "asdasd";
+
         $email = $_POST['email'];
         $password = $_POST['password'];
 
@@ -54,13 +57,7 @@
             "password" => $password,
         );
         $student = new Student();
-        $ret = $student->signin_student($studArr);
-        if($ret) {
-            echo json_encode($studArr);
-        }
-        else {
-            echo "Invalid";
-        }
+        echo json_encode($student->signin_student($studArr));
     }
 
     function getAllStudents() {
@@ -90,8 +87,9 @@
         );
 
         $student = new Student();
-        $ret = $student->update_student($studArr);
-        echo json_encode($student->getAllStudentsFromModel());
+        $student->update_student($studArr);
+        echo json_encode($student->getStudentFromModel($studArr));
+
     }
 
     function deleteUser() {
@@ -102,8 +100,7 @@
         );
 
         $student = new Student();
-        $ret = $student->delete_student($studArr);
-        echo json_encode($student->getAllStudentsFromModel());
+        $student->delete_student($studArr);
     }
 
     function storeAnnouncement() {
@@ -157,3 +154,16 @@
         echo json_encode($announcement->getAllAnnouncementsFromModel());
 
     }
+
+    function get_student() {
+        $id = "1";
+
+        $studentArr = array(
+            "id" => $id
+        );
+
+        $student = new Student();
+        echo json_encode($student->getStudentFromModel($studentArr));
+    }
+
+    // get_student();

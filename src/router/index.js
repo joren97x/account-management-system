@@ -4,16 +4,17 @@ import Announcements from '../components/Student/Announcements.vue'
 import Signin from '../components/Signin.vue'
 import Signup from '../components/Signup.vue'
 import Account from '../components/Student/Account.vue'
-import Profile from '../components/Student/Profile.vue'
 import StudentLayout from '../components/Layouts/StudentLayout.vue'
+import GuestLayout from '../components/Layouts/GuestLayout.vue'
 import AdminLayout from '../components/Layouts/AdminLayout.vue'
 import AdminDashboard from '../components/Admin/AdminDashboard.vue'
 import ManageUsers from '../components/Admin/ManageUsers.vue'
 
 const user = ref(null)
 function isLoggedIn() {
+    console.log("From router: ")
+    console.log(user.value)
     user.value = JSON.parse(localStorage.getItem('auth'))
-    console.log(user)
     if(!user.value) {
         return false
     }
@@ -32,13 +33,13 @@ const router = createRouter({
         {
             path: '/sign-in',
             name: 'Signin',
-            meta: {layout: StudentLayout},
+            meta: {layout: GuestLayout},
             component: Signin
         },
         {
             path: '/sign-up',
             name: 'Signup',
-            meta: {layout: StudentLayout},
+            meta: {layout: GuestLayout},
             component: Signup,
         },
         {
@@ -46,12 +47,6 @@ const router = createRouter({
             name: 'Account',
             meta: { layout: StudentLayout, requiresAuth: true },
             component: Account
-        },
-        {
-            path: '/profile',
-            name: 'Profile',
-            meta: { layout: StudentLayout, requiresAuth: true },
-            component: Profile,
         },
         {
             path: '/admin/dashboard',
@@ -81,7 +76,5 @@ router.beforeEach((to, from, next) => {
         next()
     }
 })
-
-
 
 export default router
