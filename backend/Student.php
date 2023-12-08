@@ -37,7 +37,6 @@ class Student {
         try {
             $stmt->execute();
             if($stmt) {
-
                 return $student;
             } 
             else {
