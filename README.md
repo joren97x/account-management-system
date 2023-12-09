@@ -1,6 +1,6 @@
 # account-management-system
 ## extract files in xampp/htdocs/
-## open the folder "account-management-system-master"
+## go to vscode and open "account-management-system-master"
 ## open terminal
 ## run these command
 ## npm install
