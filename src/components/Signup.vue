@@ -64,7 +64,7 @@
             data.append('department', user.department)
             data.append('password', user.password)
 
-            fetch(`http://localhost/account-management-system/backend/index.php`,
+            fetch(`http://localhost/account-management-system-master/backend/index.php`,
             {
                 method: 'POST',
                 body: data,

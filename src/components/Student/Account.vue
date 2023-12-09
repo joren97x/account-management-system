@@ -30,7 +30,7 @@
         data.append('role', updateUserForm.role)
         data.append('password', updateUserForm.password)
 
-        fetch(`http://localhost/account-management-system/backend/index.php`,
+        fetch(`http://localhost/account-management-system-master/backend/index.php`,
         {
             method: 'POST',
             body: data,

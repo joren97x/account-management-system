@@ -7,7 +7,7 @@
     onMounted(() => {
         let data = new FormData();
         data.append('method','getAllAnnouncements')
-        fetch('http://localhost/account-management-system/backend/index.php',
+        fetch('http://localhost/account-management-system-master/backend/index.php',
             {
                 method:'POST',
                 body:data

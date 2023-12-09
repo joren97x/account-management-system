@@ -39,7 +39,7 @@
         data.append('title', updateAnnouncementForm.title)
         data.append('description', updateAnnouncementForm.description)
 
-        fetch(`http://localhost/account-management-system/backend/index.php`,
+        fetch(`http://localhost/account-management-system-master/backend/index.php`,
         {
             method: 'POST',
             body: data,
@@ -65,7 +65,7 @@
         data.append('method', 'deleteAnnouncement');
         data.append('id', deleteAnnouncementForm.id)
 
-        fetch(`http://localhost/account-management-system/backend/index.php`,
+        fetch(`http://localhost/account-management-system-master/backend/index.php`,
         {
             method: 'POST',
             body: data,
@@ -88,7 +88,7 @@
     onMounted(() => {
         let data = new FormData();
         data.append('method','getAllAnnouncements')
-        fetch('http://localhost/account-management-system/backend/index.php',
+        fetch('http://localhost/account-management-system-master/backend/index.php',
             {
                 method:'POST',
                 body:data

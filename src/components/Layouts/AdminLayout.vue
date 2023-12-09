@@ -24,7 +24,7 @@
         data.append('description', announcementForm.description)
         data.append('created_at', announcementForm.created_at)
 
-        fetch(`http://localhost/account-management-system/backend/index.php`,
+        fetch(`http://localhost/account-management-system-master/backend/index.php`,
         {
             method: 'POST',
             body: data,
