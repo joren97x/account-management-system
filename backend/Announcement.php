@@ -47,9 +47,10 @@ class Announcement {
     }
 
     public function store_announcement($announcement) {
-        $sql = "CALL sp_store_announcement(:title, :description, :created_at)";
+        $sql = "CALL sp_store_announcement(:user_id, :title, :description, :created_at)";
 
         $stmt = $this->db_conn->prepare($sql);
+        $stmt->bindParam(':user_id',$announcement['user_id']);
         $stmt->bindParam(':title',$announcement['title']);
         $stmt->bindParam(':description',$announcement['description']);
         $stmt->bindParam(':created_at',$announcement['created_at']);

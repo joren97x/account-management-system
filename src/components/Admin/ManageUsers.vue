@@ -11,6 +11,8 @@
     const snackbarText =ref('')
     const snackbar = ref(false)
 
+    getAllUsers()
+
     const updateUserForm = reactive({
         id: null,
         first_name: null,
@@ -45,9 +47,6 @@
         deleteUserDialog.value = true
     }
 
-    onMounted(() => {
-        getAllUsers()
-    })
 
     function getAllUsers() {
         let data = new FormData();
@@ -120,38 +119,36 @@
         })
     }
 
+    const headers = [
+        {title: "ID", align: "start", key: "id", value: "id"},
+        {title: "First name", align: "start", key: "fname", value: "fname"},
+        {title: "Last name", align: "start", key: "lname", value: "lname"},
+        {title: "Email", align: "start", key: "email", value: "email"},
+        {title: "Department", align: "start", key: "department", value: "department"},
+        {title: "Role", align: "start", key: "role", value: "role"},
+        {title: "Actions", align: "start", key: "Actions", value: "Actions"},
+    ]
+
 </script>
 <template>
     <p class="text-h3">Manage users</p>
-    <v-table>
-        <thead>
+
+    <v-data-table :items="users" :headers="headers" v-if="users">
+        <template v-slot:item="{item}">
             <tr>
-                <th class="text-left"> Id </th>
-                <th class="text-left"> First name </th>
-                <th class="text-left"> Last name </th>
-                <th class="text-left"> Email </th>
-                <th class="text-left"> Department </th>
-                <th class="text-left"> Role </th>
-                <th class="text-left"> Actions </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="user in users" :key="user.id">
-                <td>{{ user.id }}</td>
-                <td>{{ user.first_name }}</td>
-                <td>{{ user.last_name }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.department }}</td>
-                <td>{{ user.role }}</td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.first_name }}</td>
+                <td>{{ item.last_name }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.department }}</td>
+                <td>{{ item.role }}</td>
                 <td>
-                    <v-btn class="me-3" @click="showEditUserDialog(user)" color="blue" prepend-icon="mdi-square-edit-outline">Edit</v-btn>
-                    <v-btn color="red" @click="showDeleteUserDialog(user)" prepend-icon="mdi-delete-empty-outline">Delete</v-btn>
+                    <v-btn class="me-3" @click="showEditUserDialog(item)" color="blue" prepend-icon="mdi-square-edit-outline">Edit</v-btn>
+                    <v-btn color="red" @click="showDeleteUserDialog(item)" prepend-icon="mdi-delete-empty-outline">Delete</v-btn>
                 </td>
             </tr>
-        </tbody>
-    </v-table>
-
-
+        </template>
+    </v-data-table>
 
     <v-dialog v-model="editUserDialog" width="80%">
         <v-card title="Edit user">

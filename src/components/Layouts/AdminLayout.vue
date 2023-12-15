@@ -1,7 +1,10 @@
 <script setup>
 
     import {ref, reactive} from 'vue'
-    import { useRouter } from 'vue-router';
+    import { useRouter } from 'vue-router'
+
+    const auth = JSON.parse(localStorage.getItem('auth'))
+    console.log(auth.id)
     const createAccouncementDialog = ref(false)
     const loading = ref(false)
     const router = useRouter()
@@ -17,9 +20,11 @@
     }
 
     function storeAnnouncement() {
+        console.log(auth.id)
         loading.value = true
         let data = new FormData();
         data.append('method', 'storeAnnouncement');
+        data.append('user_id', auth.id)
         data.append('title', announcementForm.title)
         data.append('description', announcementForm.description)
         data.append('created_at', announcementForm.created_at)

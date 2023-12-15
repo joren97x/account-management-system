@@ -104,12 +104,14 @@
     }
 
     function storeAnnouncement() {
+        $user_id = $_POST['user_id'];
         $title = $_POST['title'];
         $description = $_POST['description'];
         $date = new DateTime('now');
         $formatted_date = date_format($date,"Y-m-d H-i-s");
 
         $announcementArr = array(
+            "user_id" => $user_id,
             "title" => $title,
             "description" => $description,
             "created_at" => $formatted_date,
