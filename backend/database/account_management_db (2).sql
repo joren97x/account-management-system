@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2023 at 09:26 AM
+-- Generation Time: Dec 16, 2023 at 12:50 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -72,8 +72,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_signInStudent` (IN `_email` VARC
   SELECT * FROM users WHERE email = _email && password = _password;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_store_announcement` (IN `_title` VARCHAR(255), IN `_description` VARCHAR(255), IN `_created_at` DATE)   BEGIN
-  INSERT INTO announcements(title, description, created_at) VALUES (_title, _description, _created_at);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_store_announcement` (IN `_user_id` INTEGER, IN `_title` VARCHAR(255), IN `_description` VARCHAR(255), IN `_created_at` DATE)   BEGIN
+  INSERT INTO announcements(user_id, title, description, created_at) VALUES (_user_id, _title, _description, _created_at);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_update_announcement` (IN `_id` INT, IN `_title` VARCHAR(255), IN `_description` VARCHAR(255))   BEGIN
@@ -104,6 +104,7 @@ DELIMITER ;
 
 CREATE TABLE `announcements` (
   `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `created_at` date NOT NULL
@@ -113,11 +114,13 @@ CREATE TABLE `announcements` (
 -- Dumping data for table `announcements`
 --
 
-INSERT INTO `announcements` (`id`, `title`, `description`, `created_at`) VALUES
-(5, 'Alas 9: 15 PM na', 'wa pa koy kaon ,mzxcn,m,m,mnxm,cn,mxnc,xmzncxz,mcnzx,mn', '2023-12-07'),
-(6, 'BOANG NGA ANNOUNCEMENT', 'TINUWA NASAD AMONG SUDAN PISTE YAWA GAITAY BAHOG LOBOGT', '2023-12-07'),
-(7, 'lorem ipsum or some shit', 'lorem ispum kokwd akwokd owaan,mdn awkoawkoa akwokaw ssadhsjhghsgs', '2023-12-07'),
-(8, 'ANNOUNCEMENT: KATUGON NAKO', 'HAHAHAHAHAAHA', '2023-12-07');
+INSERT INTO `announcements` (`id`, `user_id`, `title`, `description`, `created_at`) VALUES
+(5, 0, 'Alas 9: 15 PM na', 'wa pa koy kaon ,mzxcn,m,m,mnxm,cn,mxnc,xmzncxz,mcnzx,mn', '2023-12-07'),
+(6, 0, 'BOANG NGA ANNOUNCEMENT', 'TINUWA NASAD AMONG SUDAN PISTE YAWA GAITAY BAHOG LOBOGT', '2023-12-07'),
+(7, 0, 'lorem ipsum or some shit', 'lorem ispum kokwd akwokd owaan,mdn awkoawkoa akwokaw ssadhsjhghsgs', '2023-12-07'),
+(8, 0, 'ANNOUNCEMENT: KATUGON NAKO', 'HAHAHAHAHAAHA', '2023-12-07'),
+(10, 35, 'Announcement title', 'Announcemnt description', '2023-12-16'),
+(11, 35, 'Announcemnt title 2223', 'asdasghahahaha', '2023-12-16');
 
 -- --------------------------------------------------------
 
@@ -140,18 +143,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `department`, `password`, `role`) VALUES
-(1, 'Ryan', 'Gosling', 'literally me', 'BSIT', 'mefr', 'Admin'),
-(2, 'Ice', 'Spice', 'ice@spice.e', 'BSIT', 'asdasd', 'Admin'),
-(4, 'Hev', 'Abi', 'hev@abi.com', 'BSHM', 'Admin', 'Admin'),
-(5, 'City', 'Girls', 'city@girls.com', 'BSHM', 'student', 'Student'),
+(1, 'Ryan', 'Gosling', 'literally me', 'BSIT', 'mefr', 'Student'),
+(4, 'Hev Hebv', ' Abi bibaby', 'hev@abi.comm', 'BSIT', 'asdasdasd', 'Student'),
 (6, 'Skibidi', 'Gyatt', 'skibidi gyatt rizz', 'BEED', '123456', 'Admin'),
 (7, 'Chae ', 'young', 'young@chae.boang', 'BSIT', 'asdasd', 'Student'),
-(17, 'new', 'jeans', 'oma oma godd kasu kasu wa', 'BEED', 'gyatt', 'Admin'),
-(19, '21', 'Savagee', '21@savage.com', 'BSED', 'bruh', 'Admin'),
 (22, 'Ryan', 'Gosling', 'Ryan goslling unsint a message.', 'BSIT', 'asdasd', 'Admin'),
 (23, 'Perrell', 'Brown', 'dreamy@is.perrell', 'BSHM', 'GYATTTT', 'student'),
 (33, 'Joren', 'Sumagang', 'sumagangjoren@gmail.com', 'BSIT', 'asdasd', 'student'),
-(35, 'Admin', 'Admin', 'admin@email.com', 'BSIT', 'asdasd', 'Admin');
+(35, 'Admin', 'Admin', 'admin@email.com', 'BSIT', 'asdasd', 'Admin'),
+(36, 'Hev', 'Abi', 'hev@abi.commm', 'BSIT', 'asdasd', 'Student'),
+(37, 'asdas', 'dasdas', 'dasdas@asd.ssc', 'BSIT', 'sxasx', 'Student'),
+(38, 'Doja', 'Cat', 'doja@cat.com', 'BEED', 'asdasd', 'Student');
 
 --
 -- Indexes for dumped tables
@@ -177,13 +179,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
