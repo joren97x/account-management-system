@@ -49,7 +49,6 @@
     }
 
     const required = value => !!value || 'Required.'
-    const counter = value => value.length <= 70 || 'Max 70 characters'
           
 </script>
 
@@ -100,7 +99,7 @@
         <v-card title="New announcement">
             <v-card-text>
                 <v-text-field label="Title" v-model="announcementForm.title"></v-text-field>
-                <v-textarea :rules="[required, counter]" counter="70" label="Description" v-model="announcementForm.description"></v-textarea>
+                <v-textarea :rules="[required]" label="Description" v-model="announcementForm.description"></v-textarea>
             </v-card-text>
             <v-card-actions>
                 <v-spacer/>

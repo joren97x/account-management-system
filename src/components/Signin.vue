@@ -70,10 +70,8 @@
 </script>
 
 <template>
-    <v-container>
-        <p>Admin account</p>
-        <p>email: admin@email.com</p>
-        <p>pass: asdasd</p>
+    <v-container style="height: 100vh">
+        
         <v-form fast-fail @submit.prevent>
             <v-card title="Sign in" width="69%" class="my-6">
                 <v-card-item>
@@ -87,7 +85,8 @@
                     </v-text-field>
                 </v-card-item>
                 <v-card-actions>
-                    <v-btn @click="signin" type="submit" :loading="loading">Sign in</v-btn>
+                    <v-spacer/>
+                    <v-btn @click="signin" color="blue" variant="flat" type="submit" :loading="loading">Sign in</v-btn>
                 </v-card-actions>
             </v-card>
         </v-form>

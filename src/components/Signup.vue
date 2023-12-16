@@ -90,7 +90,7 @@
 
 <template>
     
-    <v-container class="justify-center d-flex">
+    <v-container >
         <v-card title="Sign up" width="69%" class="my-6">
             <v-form fast-fail @submit.prevent>
                 <v-card-item>
@@ -113,7 +113,8 @@
                     </v-text-field>
                 </v-card-item>
                 <v-card-actions>
-                    <v-btn type="submit" @click="signup" :loading="signUpBtnLoading">Sign up</v-btn>
+                    <v-spacer/>
+                    <v-btn type="submit" color="blue" variant="flat" @click="signup" :loading="signUpBtnLoading">Sign up</v-btn>
                 </v-card-actions>
             </v-form>
         </v-card>   

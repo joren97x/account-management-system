@@ -131,9 +131,9 @@
 
 </script>
 <template>
-    <p class="text-h3">Manage users</p>
-
-    <v-data-table :items="users" :headers="headers" v-if="users">
+    <p class="text-h4 text-center bg-white py-2">User management</p>
+    <v-divider/>
+    <v-data-table :items="users" :headers="headers" v-if="users" class="mb-5">
         <template v-slot:item="{item}">
             <tr>
                 <td>{{ item.id }}</td>
